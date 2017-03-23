@@ -22,7 +22,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/aws/session"
-    "github.com/aws/aws-sdk-go/service/cognitoidentity"
+    "github.com/aws/aws-sdk-go/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go/service/iam"
 )
 
@@ -41,7 +41,7 @@ type Config struct {
 }
 
 type AWSClient struct {
-	ciconn *cognitoidentity.CognitoIdentity
+	cidpconn *cognitoidentityprovider.CognitoIdentityProvider
 	iamconn *iam.IAM
 
 	region string
@@ -119,8 +119,8 @@ func (c *Config) Client() (interface{}, error) {
 		// http://docs.aws.amazon.com/general/latest/gr/sigv4_changes.html
 		// usEast1Sess := sess.Copy(&aws.Config{Region: aws.String("us-east-1")})
 
-		log.Println("[INFO] Initializing Cognito Identity Connection")
-		client.ciconn = cognitoidentity.New(sess)
+		log.Println("[INFO] Initializing Cognito Identity Provider Connection")
+		client.cidpconn = cognitoidentityprovider.New(sess)
 	}
 
 	if len(errs) > 0 {

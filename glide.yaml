@@ -9,7 +9,7 @@ import:
   - aws/ec2metadata
   - aws/request
   - aws/session
-  - service/cognitoidentity
+  - service/cognitoidentityprovider
   - service/iam
 - package: github.com/hashicorp/go-cleanhttp
 - package: github.com/hashicorp/go-multierror
