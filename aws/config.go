@@ -24,6 +24,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
     "github.com/aws/aws-sdk-go/service/cognitoidentityprovider"
 	"github.com/aws/aws-sdk-go/service/iam"
+	"github.com/aws/aws-sdk-go/service/organizations"
 )
 
 type Config struct {
@@ -42,6 +43,7 @@ type Config struct {
 
 type AWSClient struct {
 	cidpconn *cognitoidentityprovider.CognitoIdentityProvider
+	orgconn *organizations.Organizations
 	iamconn *iam.IAM
 
 	region string
@@ -121,6 +123,9 @@ func (c *Config) Client() (interface{}, error) {
 
 		log.Println("[INFO] Initializing Cognito Identity Provider Connection")
 		client.cidpconn = cognitoidentityprovider.New(sess)
+
+		log.Println("[INFO] Initializing Organizations Connection")
+		client.orgconn = organizations.New(sess)
 	}
 
 	if len(errs) > 0 {

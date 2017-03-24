@@ -39,6 +39,7 @@ func resourceCognitoIDPUserPoolCreate(d *schema.ResourceData, meta interface{}) 
         return fmt.Errorf("Error creating User Pool %s: %s", name, err)
     }
     // return resourceCognitoIdentityProviderRead(d, createResp.Group)
+    //d.SetId(createResp.UserPoolId)
     return nil
 }
 

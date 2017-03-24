@@ -11,6 +11,7 @@ import:
   - aws/session
   - service/cognitoidentityprovider
   - service/iam
+  - service/organizations
 - package: github.com/hashicorp/go-cleanhttp
 - package: github.com/hashicorp/go-multierror
 - package: github.com/hashicorp/terraform
