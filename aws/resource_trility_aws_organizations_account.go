@@ -14,6 +14,9 @@ func resourceTrilityAwsOrganizationsAccount() *schema.Resource {
         Create: resourceOrganizationsAccountCreate,
         Read: resourceOrganizationsAccountRead,
         Delete: resourceOrganizationsAccountRemove,
+        Importer: &schema.ResourceImporter{
+            State: resourceTrilityAwsOrganizationsAccountImport,
+        },
 
         Schema: map[string]*schema.Schema{
             "name": &schema.Schema{
@@ -47,52 +50,37 @@ func resourceOrganizationsAccountCreate(d *schema.ResourceData, meta interface{}
         RoleName: aws.String(role_name),
     }
 
-    createResp, err := orgconn.CreateAccount(params)
+    out, err := orgconn.CreateAccount(params)
     if err != nil {
-        return fmt.Errorf("Error creating new account %s: %s", name, err)
-    }
-
-    return readOrganizationsAccountCreateResult(d, createResp.CreateAccountStatus)
-}
-
-func readOrganizationsAccountCreateResult(d *schema.ResourceData, account *organizations.CreateAccountStatus) error {
-    d.SetId(*account.AccountId)
-    if err := d.Set("AccountName", account.AccountName); err != nil {
         return err
     }
+
+    d.SetId(*out.CreateAccountStatus.AccountId)
     return nil
 }
 
 func resourceOrganizationsAccountRead(d *schema.ResourceData, meta interface{}) error {
     orgconn := meta.(*AWSClient).orgconn
-    name := d.Get("AccountName").(string)
+    name := d.Get("name").(string)
     id := d.Id()
 
     params := &organizations.DescribeAccountInput{
         AccountId: aws.String(id),
     }
 
-    readResp, err := orgconn.DescribeAccount(params)
+    out, err := orgconn.DescribeAccount(params)
     if err != nil {
         return fmt.Errorf("Error reading account %s (%s): %s", name, id, err)
     }
 
-    return readOrganizationsAccountReadResult(d, readResp.Account)
-}
-
-func readOrganizationsAccountReadResult(d *schema.ResourceData, account *organizations.Account) error {
-    if err := d.Set("Arn", account.Arn); err != nil {
-        return err
-    }
-    if err := d.Set("Status", account.Status); err != nil {
-        return err
-    }
+    d.Set("arn", out.Account.Arn)
+    d.Set("status", out.Account.Status)
     return nil
 }
 
 func resourceOrganizationsAccountRemove(d *schema.ResourceData, meta interface{}) error {
     orgconn := meta.(*AWSClient).orgconn
-    name := d.Get("AccountName").(string)
+    name := d.Get("name").(string)
     id := d.Id()
 
     params := &organizations.RemoveAccountFromOrganizationInput{
