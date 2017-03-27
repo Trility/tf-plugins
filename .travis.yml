@@ -1,0 +1,18 @@
+language: go
+
+go:
+  - 1.8.x
+
+install:
+  - wget "https://github.com/Masterminds/glide/releases/download/v0.12.3/glide-v0.12.3-linux-amd64.tar.gz"
+  - mkdir -p $HOME/bin
+  - tar -vxz -C $HOME/bin --strip=1 -f glide-v0.12.3-linux-amd64.tar.gz
+  - export PATH="$HOME/bin:$PATH"
+  - glide install
+
+script:
+  - go build -o tf-plugins
+
+# notifications:
+#   slack:
+#     secure: KSJAL/eE58CRicI12JxrXYFEt4vEEe85Tea3i5kUVij/3qRxsKbBWPVlxK5U9rjlYvwURJhb633We9Tt/u1+lW19p4zrUKLgMEqb/0jfc1e/+UoPNTCkKRE4CkoXMubCxR5y5AsFec6TofD0oyHY1mSh3u7+Egt7gKYUD9Xa4kW9AbpGjqt4hEdSETX9PeIF55OLaZCyy4zz4UqKuHsuqkB9dc0ULZpg5YssGQ2mdgynRpsNSirfXGpkGpcpHmmhK9KdZgyiuqxSEDsN+DoIjLIcak0yyMHcefPzx5jsvOZVvLHD0FnOcFZwsLUOCCBE59J6REjoZXQ7603mnP3m7WiGPJ+UZFFF6nxHWZhfixPWFYmKMIrLOSFjfU1COU36KnGfups8jjvdmtSEQtuMSrl3IBKYFfC7v1r0vwa2hQtdCgyRcD57V37Llc4pegxLUjExz4tR1DAz3qa6cYgxI6850Sy9abkDMi6wnMXmQA+t5ck6yNvdiTUDgnuSUuBMjQ6fRcXyKLkc8On8JGZal8zbUBBV9NR3WRlFv6YP6WdixUzZuLPZ6+hxtQ+KFypM4NPXRAxYNAkcAaoMBOU3d9gDd5oRaNtjuWBR6p7veOOv2rdsN8GoWh0u3loB4LAi2VLYND334FwiFz7Y0fzob+STBgotrJubu3C/1/X5MCc=
