@@ -69,7 +69,7 @@ func Provider() terraform.ResourceProvider {
         },
 
         ResourcesMap: map[string]*schema.Resource{
-            "trility_aws_cognito_idp_user_pool": resourceTrilityAwsCognitoIDPUserPool(),
+            "trility_aws_cognitoidentityprovider_user_pool": resourceTrilityAwsCognitoIDPUserPool(),
             "trility_aws_organizations_account": resourceTrilityAwsOrganizationsAccount(),
         },
 

@@ -13,7 +13,6 @@ func resourceTrilityAwsCognitoIDPUserPool() *schema.Resource {
     return &schema.Resource{
         Create: resourceCognitoIDPUserPoolCreate,
         Read: resourceCognitoIDPUserPoolRead,
-        // Update: resourceCognitoIDPUserPoolUpdate,
         Delete: resourceCognitoIDPUserPoolDelete,
 
         Schema: map[string]*schema.Schema {
@@ -46,10 +45,6 @@ func resourceCognitoIDPUserPoolCreate(d *schema.ResourceData, meta interface{}) 
 func resourceCognitoIDPUserPoolRead(d *schema.ResourceData, meta interface{}) error {
     return nil
 }
-
-// func resourceCognitoIDPUserPoolUpdate(d *schema.ResourceData, meta interface{}) error {
-//     return nil
-// }
 
 func resourceCognitoIDPUserPoolDelete(d *schema.ResourceData, meta interface{}) error {
     cidpconn := meta.(*AWSClient).cidpconn
