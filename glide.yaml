@@ -1,0 +1,22 @@
+package: github.com/Trility/tf-plugins
+import:
+- package: github.com/aws/aws-sdk-go
+  subpackages:
+  - aws
+  - aws/awserr
+  - aws/credentials
+  - aws/credentials/ec2rolecreds
+  - aws/ec2metadata
+  - aws/request
+  - aws/session
+  - service/cognitoidentityprovider
+  - service/iam
+  - service/organizations
+- package: github.com/hashicorp/go-cleanhttp
+- package: github.com/hashicorp/go-multierror
+- package: github.com/hashicorp/terraform
+  subpackages:
+  - helper/logging
+  - helper/schema
+  - plugin
+  - terraform

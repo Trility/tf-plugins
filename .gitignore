@@ -1,3 +1,6 @@
+# vim swp file
+*.swp
+
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -22,3 +25,12 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# Glide cache
+.glide/
+glide.lock
+
+# Vendor directory
+vendor/
+
+crash.log
