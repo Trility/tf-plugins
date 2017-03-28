@@ -18,5 +18,6 @@ import:
   subpackages:
   - helper/logging
   - helper/schema
+  - helper/hashcode
   - plugin
   - terraform
