@@ -15,6 +15,7 @@ func resourceTrilityAwsCognitoIDPUserPool() *schema.Resource {
     return &schema.Resource{
         Create: resourceCognitoIDPUserPoolCreate,
         Read: resourceCognitoIDPUserPoolRead,
+        Update: resourceCognitoIDPUserPoolUpdate,
         Delete: resourceCognitoIDPUserPoolDelete,
 
         Schema: map[string]*schema.Schema{
@@ -26,7 +27,6 @@ func resourceTrilityAwsCognitoIDPUserPool() *schema.Resource {
             "policies": &schema.Schema{
                 Type: schema.TypeSet,
                 Optional: true,
-                ForceNew: true,
                 Set: policiesHash,
                 Elem: &schema.Resource{
                     Schema: map[string]*schema.Schema{
@@ -88,6 +88,26 @@ func resourceCognitoIDPUserPoolCreate(d *schema.ResourceData, meta interface{}) 
 }
 
 func resourceCognitoIDPUserPoolRead(d *schema.ResourceData, meta interface{}) error {
+    return nil
+}
+
+func resourceCognitoIDPUserPoolUpdate(d *schema.ResourceData, meta interface{}) error {
+    cidpconn := meta.(*AWSClient).cidpconn
+    id := d.Id()
+
+    params := &cognitoidentityprovider.UpdateUserPoolInput{
+        UserPoolId: aws.String(id),
+    }
+
+    if _, ok := d.GetOk("policies"); ok {
+        params.Policies = expandPolicies(d.Get("policies").(*schema.Set).List()[0].(map[string]interface{}))
+    }
+
+    _, err := cidpconn.UpdateUserPool(params)
+    if err != nil {
+        return fmt.Errorf("Error updating User Pool %s: %s", id, err)
+    }
+
     return nil
 }
 
