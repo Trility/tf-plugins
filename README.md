@@ -1,6 +1,8 @@
 # tf-plugins
 Terraform Plugins
 
+[![Build Status](https://travis-ci.org/Trility/tf-plugins.svg?branch=master)](https://travis-ci.org/Trility/tf-plugins)
+
 ## Install
 
 * Get the latest application
