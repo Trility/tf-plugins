@@ -5,35 +5,35 @@ Terraform Plugins
 
 ## Install
 
-* Get the latest application
+* Install Go (Minimum 1.8)
+* https://golang.org/dl/
+
 ```
-go get github.com/Trility/tf-plugins
+# Create a workspace for golang projects
+mkdir -p ~/golang/src
+mkdir -p ~/golang/pkg
+mkdir -p ~/golang/bin
+
+# Edit .bashrc to set go paths for user specific
+# Golang Exports
+export PATH=$PATH:/usr/local/go/bin
+export GOROOT=/usr/local/go
+export GOPATH=~/golang
+export PATH=$PATH:$GOPATH/bin
 ```
-* Edit ~/.terraformrc
+
+* Build the plugin
+```
+curl https://glide.sh/get | sh
+cd $GOPATH/src/github.com/Trility/
+git clone https://github.com/Trility/tf-plugins.git
+glide install
+go build -o ${GOPATH}/bin/tf-plugins
+```
+
+* Add/Edit ~/.terraformrc
 ```
 providers {
     trility = "/path/to/golang/bin/tf-plugins"
 }
 ```
-
-## Build
-
-* Update git config to use SSH instead of HTTPS for github
-```
-git config --global url."git@github.com:".insteadOf "https://github.com/"
-```
-* Install Glide
-```
-curl https://glide.sh/get | sh
-```
-* Install Dependencies
-```
-glide install
-```
-* Build
-```
-go build -o ${GOPATH}/bin/tf-plugins
-```
-
-## Usage
-Coming soon....
